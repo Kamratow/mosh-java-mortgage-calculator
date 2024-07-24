@@ -10,16 +10,45 @@ public class Main {
         final byte PERCENT = 100;
 
         Scanner scanner = new Scanner(System.in);
+        int principal;
+        float annualInterestRate;
+        byte years;
 
-        System.out.print("Principal: ");
-        int principal = scanner.nextInt();
+        while(true) {
+            System.out.print("Principal: ");
+            principal = scanner.nextInt();
 
-        System.out.print("Annual Interest Rate: ");
-        float annualInterestRate = scanner.nextFloat();
+            if (principal >= 1000 && principal <= 1_000_000) {
+                break;
+            } else {
+                System.out.println("Principal should be between $1K and $1M");
+            }
+        }
+
+        while(true) {
+            System.out.print("Annual Interest Rate: ");
+            annualInterestRate = scanner.nextFloat();
+
+            if (annualInterestRate >= 1 && annualInterestRate <= 30) {
+                break;
+            } else {
+                System.out.println("Annual Interest Rate should be between 1 and 30");
+            }
+        }
+
         float monthlyInterestRate = annualInterestRate/PERCENT/MONTHS_IN_YEAR;
 
-        System.out.print("Period (Years): ");
-        byte years = scanner.nextByte();
+        while(true) {
+            System.out.print("Period (Years): ");
+            years = scanner.nextByte();
+
+            if (years >= 1 && years <= 30) {
+                break;
+            } else {
+                System.out.println("Period (Years) should be between 1 and 30");
+            }
+        }
+
         int numberOfPayments = years * 12;
 
         String mortgage = NumberFormat.getCurrencyInstance(Locale.US)
@@ -40,6 +69,5 @@ public class Main {
 //        } else {
 //            System.out.println(number);
 //        }
-
     }
 }
