@@ -17,13 +17,21 @@ public class Main {
         annualInterestRate = (float)readNumber("Annual Interest Rate: ", 1, 30);
         years = (byte)readNumber("Period (Years): ", 1, 30);
 
+        printMortgage(principal, annualInterestRate, years);
+
+        printPaymentSchedule(principal, annualInterestRate, years);
+    }
+
+    private static void printMortgage(int principal, float annualInterestRate, byte years) {
         double mortgage = calculateMortgage(principal, annualInterestRate, years);
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
         System.out.println("Mortgage payments: " + NumberFormat.getCurrencyInstance(Locale.US)
                 .format(mortgage));
+    }
 
+    private static void printPaymentSchedule(int principal, float annualInterestRate, byte years) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
