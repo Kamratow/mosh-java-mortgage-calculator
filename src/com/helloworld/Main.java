@@ -6,54 +6,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final byte MONTHS_IN_YEAR = 12;
-        final byte PERCENT = 100;
-
-        Scanner scanner = new Scanner(System.in);
         int principal;
         float annualInterestRate;
         byte years;
 
-        while(true) {
-            System.out.print("Principal: ");
-            principal = scanner.nextInt();
+        principal = (int)readNumber("Principal: ", 1000, 1_000_000);
+        annualInterestRate = (float)readNumber("Annual Interest Rate: ", 1, 30);
+        years = (byte)readNumber("Period (Years): ", 1, 30);
 
-            if (principal >= 1000 && principal <= 1_000_000) {
-                break;
-            } else {
-                System.out.println("Principal should be between $1K and $1M");
-            }
-        }
-
-        while(true) {
-            System.out.print("Annual Interest Rate: ");
-            annualInterestRate = scanner.nextFloat();
-
-            if (annualInterestRate >= 1 && annualInterestRate <= 30) {
-                break;
-            } else {
-                System.out.println("Annual Interest Rate should be between 1 and 30");
-            }
-        }
-
-        float monthlyInterestRate = annualInterestRate/PERCENT/MONTHS_IN_YEAR;
-
-        while(true) {
-            System.out.print("Period (Years): ");
-            years = scanner.nextByte();
-
-            if (years >= 1 && years <= 30) {
-                break;
-            } else {
-                System.out.println("Period (Years) should be between 1 and 30");
-            }
-        }
-
-        int numberOfPayments = years * 12;
-
-        String mortgage = NumberFormat.getCurrencyInstance(Locale.US)
-                .format(principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))/(Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1));
-        System.out.println("Mortgage: " + mortgage);
+        System.out.println("Mortgage: " + calculateMortgage(principal, annualInterestRate, years));
 
 //        FizzBuzz exercise solution
 //        Scanner scanner = new Scanner(System.in);
@@ -69,5 +30,38 @@ public class Main {
 //        } else {
 //            System.out.println(number);
 //        }
+    }
+
+    public static double readNumber(String prompt, double min, double max) {
+        Scanner scanner = new Scanner(System.in);
+        double value;
+
+        while (true) {
+            System.out.print(prompt);
+
+            value = scanner.nextDouble();
+
+            if (value >= min && value <= max) {
+                break;
+            } else {
+                System.out.println("Enter value between " + min + " and " + max);
+            }
+        }
+
+        return value;
+    }
+
+    public static String calculateMortgage(
+            int principal,
+            float annualInterestRate,
+            short years) {
+        final byte MONTHS_IN_YEAR = 12;
+        final byte PERCENT = 100;
+
+        float monthlyInterestRate = annualInterestRate/PERCENT/MONTHS_IN_YEAR;
+        short numberOfPayments = (short)(years * 12);
+
+        return NumberFormat.getCurrencyInstance(Locale.US)
+                .format(principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))/(Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1));
     }
 }
