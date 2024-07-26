@@ -2,7 +2,6 @@ package com.helloworld;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class Main {
     final static byte MONTHS_IN_YEAR = 12;
@@ -13,9 +12,9 @@ public class Main {
         float annualInterestRate;
         byte years;
 
-        principal = (int)readNumber("Principal: ", 1000, 1_000_000);
-        annualInterestRate = (float)readNumber("Annual Interest Rate: ", 1, 30);
-        years = (byte)readNumber("Period (Years): ", 1, 30);
+        principal = (int) Console.readNumber("Principal: ", 1000, 1_000_000);
+        annualInterestRate = (float) Console.readNumber("Annual Interest Rate: ", 1, 30);
+        years = (byte) Console.readNumber("Period (Years): ", 1, 30);
 
         printMortgage(principal, annualInterestRate, years);
 
@@ -55,25 +54,6 @@ public class Main {
                     / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
             System.out.println(NumberFormat.getCurrencyInstance(Locale.US).format(currentBalance));
         }
-    }
-
-    public static double readNumber(String prompt, double min, double max) {
-        Scanner scanner = new Scanner(System.in);
-        double value;
-
-        while (true) {
-            System.out.print(prompt);
-
-            value = scanner.nextDouble();
-
-            if (value >= min && value <= max) {
-                break;
-            } else {
-                System.out.println("Enter value between " + min + " and " + max);
-            }
-        }
-
-        return value;
     }
 
     public static double calculateMortgage(
