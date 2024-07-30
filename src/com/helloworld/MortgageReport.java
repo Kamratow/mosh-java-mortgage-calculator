@@ -4,8 +4,12 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class MortgageReport {
+
+    private static MortgageCalculator calculator;
+
     public static void printMortgage(int principal, float annualInterestRate, byte years) {
-        double mortgage = Main.calculateMortgage(principal, annualInterestRate, years);
+        calculator = new MortgageCalculator(principal, annualInterestRate, years);
+        double mortgage = calculator.calculateMortgage();
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
@@ -13,22 +17,14 @@ public class MortgageReport {
                 .format(mortgage));
     }
 
-    public static void printPaymentSchedule(int principal, float annualInterestRate, byte years) {
+    public static void printPaymentSchedule(byte years) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
-        float monthlyInterestRate = annualInterestRate / Main.PERCENT / Main.MONTHS_IN_YEAR;
-        short numberOfPayments = (short) (years * 12);
 
-        double currentBalance = principal;
-        short numberOfPaymentsMade = 0;
-
-        while (currentBalance > 0) {
-            numberOfPaymentsMade++;
-            currentBalance = principal
-                    * (Math.pow(1 + monthlyInterestRate, numberOfPayments) - Math.pow(1 + monthlyInterestRate, numberOfPaymentsMade))
-                    / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-            System.out.println(NumberFormat.getCurrencyInstance(Locale.US).format(currentBalance));
+        for (short month = 1; month <= years * Main.MONTHS_IN_YEAR; month ++) {
+            double balance = calculator.calculateBalance(month);
+            System.out.println(NumberFormat.getCurrencyInstance(Locale.US).format(balance));
         }
     }
 }

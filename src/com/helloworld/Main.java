@@ -15,16 +15,7 @@ public class Main {
 
         MortgageReport.printMortgage(principal, annualInterestRate, years);
 
-        MortgageReport.printPaymentSchedule(principal, annualInterestRate, years);
+        MortgageReport.printPaymentSchedule(years);
     }
 
-    public static double calculateMortgage(
-            int principal,
-            float annualInterestRate,
-            short years) {
-        float monthlyInterestRate = annualInterestRate/PERCENT/MONTHS_IN_YEAR;
-        short numberOfPayments = (short)(years * 12);
-
-        return principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))/(Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-    }
 }
