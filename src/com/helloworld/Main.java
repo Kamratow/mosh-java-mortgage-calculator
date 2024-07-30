@@ -13,9 +13,12 @@ public class Main {
         annualInterestRate = (float) Console.readNumber("Annual Interest Rate: ", 1, 30);
         years = (byte) Console.readNumber("Period (Years): ", 1, 30);
 
-        MortgageReport.printMortgage(principal, annualInterestRate, years);
+        var calculator = new MortgageCalculator(principal, annualInterestRate, years);
+        var report = new MortgageReport(calculator);
 
-        MortgageReport.printPaymentSchedule(years);
+        report.printMortgage();
+
+        report.printPaymentSchedule();
     }
 
 }

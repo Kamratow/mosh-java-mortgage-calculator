@@ -5,10 +5,13 @@ import java.util.Locale;
 
 public class MortgageReport {
 
-    private static MortgageCalculator calculator;
+    private final MortgageCalculator calculator;
 
-    public static void printMortgage(int principal, float annualInterestRate, byte years) {
-        calculator = new MortgageCalculator(principal, annualInterestRate, years);
+    public MortgageReport(MortgageCalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public void printMortgage() {
         double mortgage = calculator.calculateMortgage();
         System.out.println();
         System.out.println("MORTGAGE");
@@ -17,12 +20,12 @@ public class MortgageReport {
                 .format(mortgage));
     }
 
-    public static void printPaymentSchedule(byte years) {
+    public void printPaymentSchedule() {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
 
-        for (short month = 1; month <= years * Main.MONTHS_IN_YEAR; month ++) {
+        for (short month = 1; month <= calculator.getYears() * Main.MONTHS_IN_YEAR; month ++) {
             double balance = calculator.calculateBalance(month);
             System.out.println(NumberFormat.getCurrencyInstance(Locale.US).format(balance));
         }
